@@ -1,34 +1,69 @@
 using System;
-using System.Collections.Generic;
+
+using System.Data;
+
 using System.Drawing;
+
+using System.Collections;
+
 using System.Windows.Forms;
+
+using System.ComponentModel;
+
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace myseq
-{
-    public class MapPane : DockContent
-    {
-        public MapCon mapCon;// {get; set; }
-        private MainForm f1; // Caution: may be null
-
-        #region Designer components
-        public NumericUpDown offsetx;// {get; set; }
-
-        public NumericUpDown offsety;// {get; set; }
-        public static NumericUpDown scale;
-        public NumericUpDown filterzneg;// {get; set; }
-
-        public NumericUpDown filterzpos;// {get; set; }
+using System.Text.RegularExpressions;
 
 
-        private readonly System.ComponentModel.Container components;
-        # endregion Designer components
+namespace myseq {
 
-        public MapPane()
-        {
+    public class MapPane : DockContent {
+
+        public myseq.MapCon mapCon;
+
+        public System.Windows.Forms.NumericUpDown offsetx;
+
+        public System.Windows.Forms.NumericUpDown offsety;
+
+        public System.Windows.Forms.NumericUpDown scale;
+
+        public System.Windows.Forms.NumericUpDown filterzneg;
+
+        public System.Windows.Forms.NumericUpDown filterzpos;
+
+        public System.Windows.Forms.Button cmdCommand;
+
+        public  System.Windows.Forms.TextBox txtLookup;
+
+        private System.Windows.Forms.Button cmdLookup;      
+
+        private System.Windows.Forms.Label lblScale;
+
+        private System.Windows.Forms.Label lblOffsetY;
+
+        private System.Windows.Forms.Label lblOffsetX;
+
+        private System.Windows.Forms.Label lblZNeg;
+
+        private System.Windows.Forms.Label lblZPos;
+
+        private System.Windows.Forms.Label lblLookup;
+
+        private System.ComponentModel.Container components = null;
+
+        private frmMain f1 = null; // Caution: may be null
+
+        private EQData eq = null;
+
+        public MapPane() {
+
             InitializeComponent();
 
+            
+
             // Create the quick lookup text field and buttn
+
+            
 
             offsetx.Minimum = -100000;
 
@@ -38,17 +73,23 @@ namespace myseq
 
             offsety.Maximum = 100000;
 
+            
+
             scale.Maximum = 10000;
 
             scale.Value = 100;
 
             scale.Minimum = 10;
 
+
+
             scale.Increment = 10;
 
             offsetx.Increment = 20;
 
             offsety.Increment = 20;
+
+
 
             filterzneg.Increment = 5;
 
@@ -65,37 +106,108 @@ namespace myseq
             filterzneg.Value = 75;
 
             filterzpos.Value = 75;
+
         }
 
-        public void SetComponents(MainForm f1)
+
+
+        public void SetComponents(frmMain f1,EQData eq)
+
         {
+
             this.f1 = f1;
+
+            this.eq = eq;
+
         }
+
+
 
         protected override void Dispose(bool disposing)
+        
         {
-            if (disposing)
-            {
-                components?.Dispose();
-            }
+
+            if (disposing)  
+
+                if (components != null)  
+
+                    components.Dispose();
+
             base.Dispose(disposing);
+
         }
 
-        protected override string GetPersistString() => "MapWindow";
+        protected override string GetPersistString()
+        
+        {
+
+            return "MapWindow";
+
+        }
+
+        private void cmdLookup_Click(object sender, System.EventArgs e)
+        
+        {
+
+                txtLookup.Text = "";
+
+                txtLookup.Focus();
+
+                Lookup("");
+
+        }
+
+
+
+        private void txtLookup_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        
+        {
+
+            if (e.KeyChar == (char)Keys.Enter) {
+
+                Lookup(txtLookup.Text);
+
+                txtLookup.Focus();                
+
+                e.Handled = true;
+
+            }
+
+        }
+
+        
+
+        private void Lookup(String name)
+
+        {   
+
+            eq.MarkLookups(name);
+
+            mapCon.Invalidate();
+
+        }
 
         #region Component Designer generated code
 
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.offsetx = new System.Windows.Forms.NumericUpDown();
             this.offsety = new System.Windows.Forms.NumericUpDown();
-            scale = new System.Windows.Forms.NumericUpDown();
+            this.scale = new System.Windows.Forms.NumericUpDown();
+            this.lblScale = new System.Windows.Forms.Label();
+            this.lblOffsetY = new System.Windows.Forms.Label();
+            this.lblOffsetX = new System.Windows.Forms.Label();
+            this.cmdCommand = new System.Windows.Forms.Button();
             this.filterzneg = new System.Windows.Forms.NumericUpDown();
+            this.lblZNeg = new System.Windows.Forms.Label();
             this.filterzpos = new System.Windows.Forms.NumericUpDown();
+            this.lblZPos = new System.Windows.Forms.Label();
+            this.cmdLookup = new System.Windows.Forms.Button();
+            this.txtLookup = new System.Windows.Forms.TextBox();
+            this.lblLookup = new System.Windows.Forms.Label();
             this.mapCon = new myseq.MapCon();
             ((System.ComponentModel.ISupportInitialize)(this.offsetx)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.offsety)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(scale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterzneg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterzpos)).BeginInit();
             this.SuspendLayout();
@@ -107,7 +219,7 @@ namespace myseq
             this.offsetx.Size = new System.Drawing.Size(58, 20);
             this.offsetx.TabIndex = 3;
             this.offsetx.Visible = false;
-            this.offsetx.ValueChanged += new System.EventHandler(this.Offsetx_ValueChanged);
+            this.offsetx.ValueChanged += new System.EventHandler(this.offsetx_ValueChanged);
             // 
             // offsety
             // 
@@ -116,32 +228,74 @@ namespace myseq
             this.offsety.Size = new System.Drawing.Size(56, 20);
             this.offsety.TabIndex = 5;
             this.offsety.Visible = false;
-            this.offsety.ValueChanged += new System.EventHandler(this.Offsety_ValueChanged);
+            this.offsety.ValueChanged += new System.EventHandler(this.offsety_ValueChanged);
             // 
             // scale
             // 
-            scale.Location = new System.Drawing.Point(313, 447);
-            scale.Maximum = new decimal(new int[] {
+            this.scale.Location = new System.Drawing.Point(313, 447);
+            this.scale.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            scale.Minimum = new decimal(new int[] {
+            this.scale.Minimum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            scale.Name = "scale";
-            scale.Size = new System.Drawing.Size(48, 20);
-            scale.TabIndex = 7;
-            scale.Value = new decimal(new int[] {
+            this.scale.Name = "scale";
+            this.scale.Size = new System.Drawing.Size(48, 20);
+            this.scale.TabIndex = 7;
+            this.scale.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            scale.Visible = false;
-            scale.ValueChanged += new System.EventHandler(this.Scale_ValueChanged);
-
+            this.scale.Visible = false;
+            this.scale.ValueChanged += new System.EventHandler(this.scale_ValueChanged);
+            // 
+            // lblScale
+            // 
+            this.lblScale.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblScale.Location = new System.Drawing.Point(279, 450);
+            this.lblScale.Name = "lblScale";
+            this.lblScale.Size = new System.Drawing.Size(40, 16);
+            this.lblScale.TabIndex = 6;
+            this.lblScale.Text = "Scale";
+            this.lblScale.Visible = false;
+            // 
+            // lblOffsetY
+            // 
+            this.lblOffsetY.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblOffsetY.Location = new System.Drawing.Point(174, 451);
+            this.lblOffsetY.Name = "lblOffsetY";
+            this.lblOffsetY.Size = new System.Drawing.Size(48, 16);
+            this.lblOffsetY.TabIndex = 4;
+            this.lblOffsetY.Text = "Offset Y";
+            this.lblOffsetY.Visible = false;
+            // 
+            // lblOffsetX
+            // 
+            this.lblOffsetX.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblOffsetX.Location = new System.Drawing.Point(69, 452);
+            this.lblOffsetX.Name = "lblOffsetX";
+            this.lblOffsetX.Size = new System.Drawing.Size(48, 16);
+            this.lblOffsetX.TabIndex = 2;
+            this.lblOffsetX.Text = "Offset X";
+            this.lblOffsetX.Visible = false;
+            // 
+            // cmdCommand
+            // 
+            this.cmdCommand.Location = new System.Drawing.Point(8, 448);
+            this.cmdCommand.Name = "cmdCommand";
+            this.cmdCommand.Size = new System.Drawing.Size(55, 23);
+            this.cmdCommand.TabIndex = 1;
+            this.cmdCommand.Text = "GO";
+            this.cmdCommand.Visible = false;
+            this.cmdCommand.Click += new System.EventHandler(this.cmdCommand_Click);
+            // 
+            // filterzneg
+            // 
             this.filterzneg.Increment = new decimal(new int[] {
             5,
             0,
@@ -157,8 +311,18 @@ namespace myseq
             this.filterzneg.Size = new System.Drawing.Size(56, 20);
             this.filterzneg.TabIndex = 9;
             this.filterzneg.Visible = false;
-            this.filterzneg.ValueChanged += new System.EventHandler(this.Filterzneg_ValueChanged);
-            //// 
+            this.filterzneg.ValueChanged += new System.EventHandler(this.filterzneg_ValueChanged);
+            // 
+            // lblZNeg
+            // 
+            this.lblZNeg.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblZNeg.Location = new System.Drawing.Point(367, 450);
+            this.lblZNeg.Name = "lblZNeg";
+            this.lblZNeg.Size = new System.Drawing.Size(40, 16);
+            this.lblZNeg.TabIndex = 8;
+            this.lblZNeg.Text = "Z Neg";
+            this.lblZNeg.Visible = false;
+            // 
             // filterzpos
             // 
             this.filterzpos.Increment = new decimal(new int[] {
@@ -176,39 +340,81 @@ namespace myseq
             this.filterzpos.Size = new System.Drawing.Size(56, 20);
             this.filterzpos.TabIndex = 11;
             this.filterzpos.Visible = false;
-            this.filterzpos.ValueChanged += new System.EventHandler(this.Filterzpos_ValueChanged);
+            this.filterzpos.ValueChanged += new System.EventHandler(this.filterzpos_ValueChanged);
+            // 
+            // lblZPos
+            // 
+            this.lblZPos.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblZPos.Location = new System.Drawing.Point(475, 450);
+            this.lblZPos.Name = "lblZPos";
+            this.lblZPos.Size = new System.Drawing.Size(40, 16);
+            this.lblZPos.TabIndex = 10;
+            this.lblZPos.Text = "Z Pos";
+            this.lblZPos.Visible = false;
+            // 
+            // cmdLookup
+            // 
+            this.cmdLookup.Location = new System.Drawing.Point(687, 447);
+            this.cmdLookup.Name = "cmdLookup";
+            this.cmdLookup.Size = new System.Drawing.Size(48, 22);
+            this.cmdLookup.TabIndex = 4;
+            this.cmdLookup.Text = "Reset";
+            this.cmdLookup.Visible = false;
+            this.cmdLookup.Click += new System.EventHandler(this.cmdLookup_Click);
+            // 
+            // txtLookup
+            // 
+            this.txtLookup.Location = new System.Drawing.Point(615, 448);
+            this.txtLookup.Name = "txtLookup";
+            this.txtLookup.Size = new System.Drawing.Size(56, 20);
+            this.txtLookup.TabIndex = 5;
+            this.txtLookup.Visible = false;
+            this.txtLookup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLookup_KeyPress);
+            // 
+            // lblLookup
+            // 
+            this.lblLookup.Location = new System.Drawing.Point(572, 450);
+            this.lblLookup.Name = "lblLookup";
+            this.lblLookup.Size = new System.Drawing.Size(47, 23);
+            this.lblLookup.TabIndex = 12;
+            this.lblLookup.Text = "Lookup";
+            this.lblLookup.Visible = false;
             // 
             // mapCon
             // 
             this.mapCon.AutoScroll = true;
-            this.mapCon.BackColor = SystemColors.ControlLightLight;
+            this.mapCon.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.mapCon.Location = new System.Drawing.Point(0, 0);
             this.mapCon.Name = "mapCon";
-            this.mapCon.PanOffsetX = 0F;
-            this.mapCon.PanOffsetY = 0F;
-            this.mapCon.Ratio = 1F;
-            this.mapCon.Size = new System.Drawing.Size(361, 300);
+            this.mapCon.Size = new System.Drawing.Size(384, 264);
             this.mapCon.TabIndex = 0;
-            this.mapCon.UpdateSteps = 5;
-            this.mapCon.UpdateTicks = 1;
-            this.mapCon.MouseEnter += new System.EventHandler(this.MapCon_MouseEnter);
+            this.mapCon.MouseEnter += new System.EventHandler(this.mapCon_MouseEnter);
             // 
             // MapPane
             // 
-            this.AutoValidate = AutoValidate.EnablePreventFocusChange;
-            this.BackColor = SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(762, 488);
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.cmdLookup);
+            this.Controls.Add(this.cmdCommand);
             this.Controls.Add(this.offsetx);
             this.Controls.Add(this.offsety);
-            this.Controls.Add(scale);
+            this.Controls.Add(this.scale);
             this.Controls.Add(this.filterzneg);
             this.Controls.Add(this.filterzpos);
+            this.Controls.Add(this.txtLookup);
+            this.Controls.Add(this.lblLookup);
+            this.Controls.Add(this.lblZPos);
+            this.Controls.Add(this.lblZNeg);
+            this.Controls.Add(this.lblScale);
+            this.Controls.Add(this.lblOffsetY);
+            this.Controls.Add(this.lblOffsetX);
             this.Controls.Add(this.mapCon);
             this.Name = "MapPane";
+            this.Size = new System.Drawing.Size(776, 480);
             this.Resize += new System.EventHandler(this.MapPane_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.offsetx)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.offsety)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(scale)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterzneg)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterzpos)).EndInit();
             this.ResumeLayout(false);
@@ -216,265 +422,173 @@ namespace myseq
 
         }
 
-        #endregion Component Designer generated code
+        #endregion
 
-        public void MapReset()
-        {
-            scale.Value = 100M;
-            mapCon.scale = 1.0f;
-            offsetx.Value = 0;
-            offsety.Value = 0;
-            filterzneg.Value = 75;
-            filterzpos.Value = 75;
-            mapCon.ClearPan();
-        }
 
- 
-        private void MapPane_Resize(object sender, EventArgs e)
-        {
+
+        private void MapPane_Resize(object sender, EventArgs e) {
+
             Size s = mapCon.Size;
+
             Size t = Size;
+
+
+
             s.Width = t.Width;
+
+            // old toolbar adjust s.Height = t.Height - 30; // Allow for controls
             s.Height = t.Height;
+
             mapCon.Size = s;
-            var top = Size.Height - 25; // Top of controls
+
+
+
+            int top = Size.Height - 25; // Top of controls
+
+
+
+            cmdCommand.Top = top;
+
+
+
             offsetx.Top = top;
+
+            lblOffsetX.Top = top;
+
+
+
             offsety.Top = top;
+
+            lblOffsetY.Top = top;
+
+
+
             scale.Top = top;
+
+            lblScale.Top = top;
+
+
+
             filterzneg.Top = top;
+
+            lblZNeg.Top = top;
+
+
+
             filterzpos.Top = top;
 
-            mapCon.OnResize();
-            mapCon?.Invalidate();
-        }
+            lblZPos.Top = top;
 
-        public void ZoomIn()
-        {
-            var current_val = scale.Value;
-            if (current_val < 100)
-            {
-                current_val += 10;
-                if (current_val > 100)
-                {
-                    current_val = 100;
-                }
-            }
-            else if (current_val < 200)
-            {
-                current_val += 25;
-                if (current_val > 200)
-                {
-                    current_val = 200;
-                }
-            }
-            else if (current_val < 300)
-            {
-                current_val += 25;
-                if (current_val > 300)
-                {
-                    current_val = 300;
-                }
-            }
-            else if (current_val < 500)
-            {
-                current_val += 50;
-                if (current_val > 500)
-                {
-                    current_val = 500;
-                }
-            }
-            else
-            {
-                current_val += 100;
-            }
 
-            if (current_val >= scale.Minimum && current_val <= scale.Maximum)
-            {
-                scale.Value = current_val;
-            }
-        }
 
-        public void ZoomOut()
-        {
-            var current_val = scale.Value;
-            if (current_val <= 100)
-            {
-                current_val = current_val.subhundred();
-            }
-            else if (current_val <= 200)
-            {
-                current_val = current_val.Twohundred();
-            }
-            else if (current_val <= 300)
-            {
-                current_val = current_val.Threehundred();
-            }
-            else if (current_val <= 400)
-            {
-                current_val = current_val.Fourhundred();
-            }
-            else if (current_val <= 500)
-            {
-                current_val = current_val.FiveHundred();
-            }
-            else
-            {
-                current_val -= 100;
-            }
+            lblLookup.Top = top;
 
-            if (current_val >= scale.Minimum && current_val <= scale.Maximum)
-            {
-                scale.Value = current_val;
-            }
-        }
+            txtLookup.Top = top;
 
-        private void Offsetx_ValueChanged(object sender, EventArgs e)
-        {
-            mapCon.Offset_X_ValueChanged(offsetx);
-        }
+            cmdLookup.Top = top;
 
-        private void Offsety_ValueChanged(object sender, EventArgs e)
-        {
-            mapCon.Offset_Y_ValueChanged(offsety);
-        }
 
-        private void Scale_ValueChanged(object sender, EventArgs e)
-        {
-            f1.toolStripScale.Text = $"{scale.Value / 100:0%}";
-            mapCon.scale = (float)scale.Value / 100.0f;
 
-            mapCon.ReAdjust();
+            mapCon.onResize();
+
             mapCon.Invalidate();
+
         }
 
-        private void Filterzpos_ValueChanged(object sender, EventArgs e)
-        {
-            mapCon.SetFilterPos((int)filterzpos.Value);
-            if (f1 != null)
-            {
-                f1.toolStripZPos.Text = $"{filterzpos.Value:0.0}";
-            }
-        }
 
-        private void Filterzneg_ValueChanged(object sender, EventArgs e)
-        {
-            mapCon.SetFilterNeg((int)filterzneg.Value);
 
-            if (f1 != null)
-            {
-                f1.toolStripZNeg.Text = $"{filterzneg.Value:0.0}";
-            }
-        }
+        private void offsetx_ValueChanged(object sender, System.EventArgs e) {
 
-        private void MapCon_MouseEnter(object sender, EventArgs e)
-        {
-            f1.FocusMouse();
-        }
+            mapCon.m_panOffsetX = -(int)offsetx.Value;
 
-        public bool MapPaneScale(decimal Num)
-        {
-            scale.Value = Num;
-            return true;
-        }
-
-        #region KeyPress
-        public void MapCon_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            Dictionary<char, Action> KeyInstructions = new Dictionary<char, Action>()
-                {
-                    {'1', OneKey },
-                    {'2', TwoKey },
-                    {'3', ThreeKey},
-                    {'4', FourKey},
-                    {'5', Cor5Key},
-                    {'c', Cor5Key},
-                    {'6', SixKey},
-                    {'7', SevenKey},
-                    {'8', EightKey},
-                    {'9', NineKey},
-                    {'+', PlusKey},
-                    {'-', MinusKey}
-                };
-            if (!KeyInstructions.ContainsKey(e.KeyChar)) return;
-            KeyInstructions[char.ToLower(e.KeyChar)]();
             mapCon.ReAdjust();
+
+            mapCon.Invalidate();
+
         }
 
-        private void OneKey()
-        {
-            offsety.Value += 50;
 
-            offsetx.Value -= 50;
+
+        private void offsety_ValueChanged(object sender, System.EventArgs e) {
+
+            mapCon.m_panOffsetY = -(int)offsety.Value;
+
+            mapCon.ReAdjust();
+
+            mapCon.Invalidate();
+
         }
 
-        private void TwoKey()
-        {
-            offsety.Value += 50;
+
+
+        private void scale_ValueChanged(object sender, System.EventArgs e) {
+
+            mapCon.scale = (float)(scale.Value)/100.0f;
+
+            f1.toolStripScale.Text = String.Format("{0:0.0%}", scale.Value/100);
+
+            mapCon.ReAdjust();
+
+            mapCon.Invalidate();
+
         }
 
-        private void ThreeKey()
-        {
-            offsety.Value += 50;
 
-            offsetx.Value += 50;
+
+        private void cmdCommand_Click(object sender, System.EventArgs e) {
+
+            if (f1 == null) return;
+
+
+
+            f1.cmdCommand_Click(sender, e);
+
         }
 
-        private void SixKey()
-        {
-            offsetx.Value += 50;
+
+
+        private void filterzpos_ValueChanged(object sender, System.EventArgs e) {
+
+            mapCon.filterpos = (int)filterzpos.Value;
+            if (f1 != null)
+                f1.toolStripZPos.Text = String.Format("{0:0.0}", filterzpos.Value);
+
         }
 
-        private void NineKey()
-        {
-            offsety.Value -= 50;
 
-            offsetx.Value += 50;
+
+        private void filterzneg_ValueChanged(object sender, System.EventArgs e) {
+
+            mapCon.filterneg = (int)filterzneg.Value;
+
+            if (f1 != null)
+                f1.toolStripZNeg.Text = String.Format("{0:0.0}", filterzneg.Value);
+
         }
 
-        private void EightKey()
-        {
-            offsety.Value -= 50;
+
+
+        private void mapCon_MouseEnter(object sender, System.EventArgs e) {
+
+            // focus for docking panel changes, to autohide panels that may be visible
+            if ((f1.SpawnList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockLeftAutoHide ||
+                 f1.SpawnList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockRightAutoHide ||
+                 f1.SpawnList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockTopAutoHide ||
+                 f1.SpawnList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockBottomAutoHide) && f1.SpawnList.ContainsFocus)
+                mapCon.Focus();
+            if ((f1.SpawnTimerList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockLeftAutoHide ||
+                 f1.SpawnTimerList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockRightAutoHide ||
+                 f1.SpawnTimerList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockTopAutoHide ||
+                 f1.SpawnTimerList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockBottomAutoHide) && f1.SpawnTimerList.ContainsFocus)
+                mapCon.Focus();
+            if ((f1.GroundItemList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockLeftAutoHide ||
+                 f1.GroundItemList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockRightAutoHide ||
+                 f1.GroundItemList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockTopAutoHide ||
+                 f1.GroundItemList.DockState == WeifenLuo.WinFormsUI.Docking.DockState.DockBottomAutoHide) && f1.GroundItemList.ContainsFocus)
+                mapCon.Focus();
         }
 
-        private void SevenKey()
-        {
-            offsetx.Value -= 50;
-
-            offsety.Value -= 50;
-        }
-
-        private void FourKey()
-        {
-            offsetx.Value -= 50;
-        }
-
-        private void Cor5Key()
-        {
-            offsetx.Value = 0;
-
-            offsety.Value = 0;
-        }
-
-        private void MinusKey()
-        {
-            if (mapCon.scale - 0.2 >= 0.1)
-            {
-                mapCon.scale -= 0.2f;
-
-                scale.Value = (decimal)(mapCon.scale * 100);
-            }
-
-            Invalidate();
-        }
-
-        private void PlusKey()
-        {
-            mapCon.scale += 0.2f;
-
-            scale.Value = (decimal)(mapCon.scale * 100);
-
-            Invalidate();
-        }
-        #endregion
     }
+
 }
+

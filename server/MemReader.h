@@ -20,21 +20,26 @@
 
 #pragma once
 
-#include "Common.h"
-#include "IniReader.h"
-#include <tlhelp32.h>
 
+
+#include "Common.h"
+
+#include "IniReader.h"
+
+#include <tlhelp32.h>
 
 typedef uint64_t QWORD;
 
 
 
-
-
 // The interface classes can be extended, but never changed! They force backwards compatibility.
+
 class MemReaderInterface
+
 {
+
 public:
+
 	virtual bool isValid() = 0;
 
 	virtual bool openFirstProcess(string filename, bool debug = false) = 0;
@@ -62,13 +67,17 @@ public:
 	virtual BYTE extractBYTE(QWORD offset) = 0;
 
 	virtual UINT extractUINT(QWORD offset) = 0;
+
 };
 
 
 
 class MemReader : public MemReaderInterface
+
 {
+
 private:
+
 	string	originalFilename;
 
 	//HANDLE 	currentEQProcessHandle;
@@ -82,6 +91,7 @@ private:
 	bool openProcess(string filename, bool first, bool debug);
 
 protected:
+
 	HANDLE 	currentEQProcessHandle;
 
 	DWORD	currentEQProcessID;
@@ -89,6 +99,7 @@ protected:
 	QWORD	currentEQProcessBaseAddress;
 
 public:
+
 	MemReader();
 
 	~MemReader();
@@ -130,4 +141,6 @@ public:
 	bool AdjustPrivileges();
 
 	QWORD MemReader::GetModuleBaseAddress(DWORD iProcId, TCHAR* DLLName);
+
 };
+

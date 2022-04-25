@@ -20,18 +20,20 @@
 
 #pragma once
 
+
+
 #include "Common.h"
+
 #include "IniReader.h"
 
+ 
 
 #pragma pack(push, 1)
 
-
-
-
-
 struct itemBuffer_t
+
 {
+
 	DWORD id{};
 
 	DWORD dropid{};
@@ -45,14 +47,19 @@ struct itemBuffer_t
 	string name;
 
 	UINT flags{};
+
 };
 
-
+ 
 
 #pragma pack(pop) 
-class Item
+
+class Item 
+
 {
+
 public:
+
 	enum offset_types { OT_prev, OT_next, OT_id, OT_dropid, OT_x, OT_y, OT_z, OT_name, OT_max };
 
 	UINT offsets[OT_max]{};
@@ -67,20 +74,26 @@ public:
 
 	vector<itemBuffer_t> itemList;
 
+	
+
 private:
-	string extractRawString(offset_types ot) { return string(&rawBuffer[offsets[ot]]); }
 
-	float extractRawFloat(offset_types ot) { return *((float*)&rawBuffer[offsets[ot]]); }
+	string extractRawString(offset_types ot)	{ return string(&rawBuffer[offsets[ot]]); }
 
-	DWORD extractRawDWord(offset_types ot) { return *((DWORD*)&rawBuffer[offsets[ot]]); }
+	float extractRawFloat(offset_types ot)		{ return *((float*) &rawBuffer[offsets[ot]]); }
 
-	QWORD extractRawQWord(offset_types ot) { return *((QWORD*)&rawBuffer[offsets[ot]]); }
+	DWORD extractRawDWord(offset_types ot)		{ return *((DWORD*) &rawBuffer[offsets[ot]]); }
 
-	BYTE extractRawByte(offset_types ot) { return *((BYTE*)&rawBuffer[offsets[ot]]); }
+	QWORD extractRawQWord(offset_types ot)      { return *((QWORD*) &rawBuffer[offsets[ot]]); }
 
-	int extractRawInt(offset_types ot) { return *((int*)&rawBuffer[offsets[ot]]); }
+	BYTE extractRawByte(offset_types ot)		{ return *((BYTE*)  &rawBuffer[offsets[ot]]); }
 
-public:
+	int extractRawInt(offset_types ot)			{ return *((int*)	&rawBuffer[offsets[ot]]); }	
+
+	
+
+public:	
+
 	Item(void);
 
 	void init(IniReaderInterface* ir_intf);
@@ -91,17 +104,19 @@ public:
 
 	/* when you are done filling out a NetBuffer, push it for shipping across the network */
 
-	void pushNetBuffer() { itemList.push_back(tempItemBuffer); }
+	void pushNetBuffer()						{ itemList.push_back(tempItemBuffer); }
 
-	UINT getNetBufferSize() { return (UINT)itemList.size(); }
+	UINT getNetBufferSize()						{ return (UINT) itemList.size(); }
 
-	itemBuffer_t* getNetBufferStart() { return &itemList.front(); }
+	itemBuffer_t* getNetBufferStart()		{ return &itemList.front(); }
 
 	/* when you are done shipping all the data across the network, reset/clear the NetBuffers */
 
-	void clearNetBuffer() { itemList.clear(); }
+	void clearNetBuffer()						{ itemList.clear(); }
 
-	QWORD extractNextPointer() { return extractRawQWord(OT_next); }
+	QWORD extractNextPointer()					{ return extractRawQWord(OT_next); }
 
-	QWORD extractPrevPointer() { return extractRawQWord(OT_prev); }
+	QWORD extractPrevPointer()					{ return extractRawQWord(OT_prev); }
+
 };
+

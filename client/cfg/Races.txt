@@ -93,7 +93,7 @@ Alligator
 Troll
 Ogre
 Dwarf
-Cazic-Thule
+Cazic Thule
 Cockatrice
 Daisy Man
 Vampire
@@ -117,7 +117,7 @@ Clam
 Seahorse
 Ghost
 Ghost
-Saber-toothed Cat
+Sabertooth
 Wolf
 Gorgon
 Dragon
@@ -152,14 +152,14 @@ Erollisi
 Tribunal
 Bertoxxulous
 Bristlebane
-Fae Drake
-Sarnak Skeleton
+Fay Drake
+Undead Sarnak
 Ratman
 Wyvern
 Wurm
 Devourer
 Iksar Golem
-Iksar Skeleton
+Undead Iksar
 Man-Eating Plant
 Raptor
 Sarnak Golem
@@ -203,7 +203,7 @@ Underbulk
 Grimling
 Worm
 Evan Test
-Khati Sha
+Shadel
 Owlbear
 Rhino Beetle
 Vampire
@@ -224,7 +224,7 @@ Zelniak
 Lightcrawler
 Shade
 Sunflower
-Shadel
+Sun Revenant
 Shrieker
 Galorian
 Netherbian
@@ -255,7 +255,7 @@ Diseased Fiend
 Solusek Ro Guard
 Bertoxxulous
 The Tribunal
-Terris-Thule
+Terris Thule
 Vegerog
 Crocodile
 Bat
@@ -332,7 +332,7 @@ Froglok
 Troll
 Troll
 Troll
-Troll Pirate Ghost
+Ghost
 Pirate
 Pirate
 Pirate
@@ -346,7 +346,7 @@ Troll Zombie
 Luggald
 Luggald
 Luggalds
-Drogmor
+Drogmore
 Froglok Skeleton
 Undead Froglok
 Knight of Hate
@@ -354,8 +354,8 @@ Arcanist of Hate
 Veksar
 Veksar
 Veksar
-Chokidai
-Undead Chokidai
+Chokadai
+Undead Chokadai
 Undead Veksar
 Vampire
 Vampire
@@ -427,7 +427,7 @@ Crystal Shard
 Portal
 Coin Purse
 Rock Pile
-Murkglider Egg Sac
+Murkglider Egg Sack
 Drake
 Dervish
 Drake
@@ -447,7 +447,7 @@ Dragon Egg
 Dragon Statue
 Lava Rock
 Animated Statue
-Spider Egg Sac
+Spider Egg Sack
 Lava Spider
 Lava Spider Queen
 Dragon
@@ -509,7 +509,7 @@ Puffer Spore
 Stone Ring
 Root Tentacle
 Runic Symbol
-Saltpeter Bomb
+Saltpetter Bomb
 Floating Skull
 Spike Trap
 Totem
@@ -621,7 +621,7 @@ Stone Pylon
 Demon Vulture
 Wagon
 God of Discord
-Feran Mount
+Wrulon Mount
 Ogre NPC - Male
 Sokokar Mount
 Giant (Rallosian mats)
@@ -656,7 +656,7 @@ Spider Mount
 Bear Mount
 Rat Mount
 Sessiloid Mount
-Morell-Thule
+Morell Thule
 Marionette
 Book Dervish
 Topiary Lion
@@ -668,7 +668,7 @@ Gingerbread Man
 Royal Guard
 Rabbit
 Blind Dreamer
-Cazic-Thule
+Cazic Thule
 Topiary Lion Mount
 Rot Dog Mount
 Goral Mount
@@ -711,7 +711,7 @@ Skystrider
 Water Spout
 Aviak Pull Along
 Gelatinous Cube
-Dog
+Cat
 Elk Head
 Holgresh
 Beetle
@@ -723,166 +723,4 @@ Carrier Hand
 Akheva
 Servant of Shadow
 Luclin
-Xaric the Unspoken
-Dervish
-Dervish
-Luclin
-Luclin
-Orb
-Luclin
-Pegasus
-Gehein
-Tirun
-Orafik
-Skirth
-Xulous
-Fear Crystal
-Fear Embryo
-Golem
-Bixie
-Butterfly
-Ursarachnid
-Gargoyle
-Molerat
-Bone Golem
-Palisade
-Honey Pot
-Plant Part
-Lendiniara
-Dragonfly Mount
-Ruishi Mount
-Komodo Dragon Mount
-Raptor Mount
-Clockwork Protector
-Clockwork Soldier
-Reindeer Mount
-Clockwork Spider
-Clockwork Copter
-Book Minion
-Broom Minion
-Clockwork Worker
-Clockwork Gnome
-Clockwork Menace
-Clockwork Bomb
-Stone Worker
-Imp
-Skeleton
-Siren
-Shissar
-Tyrannosaur
-Book Minion
-Broom Minion
-Ankylosaurus
-Fire Elf
-Fire Elf Royal
-Triceratops
-Angler Serpent
-Skeleton
-Wolf
-Worg
-Skeleton
-Treant
-Naga
-Lizardman
-Cultist
-Clockwork Boss
-Crab
-Octopus
-Elemental
-Avian
-Parrot
-Chest
-Prowler Mount
-Wyvern Mount
-Ancient Wolf
-Ancient Spirit Wolf
-Ancient Chokidai
-Chokidai
-Wolf
-Spirit Wolf
-Ancient Skeleton
-Skeleton
-Ancient Elemental
-Ancient Tiger
-Ancient Animated Armor
-Golem
-Aneuk
-Chest
-Dinosaur
-Giant
-Goblin
-Wasp
-Scorpikis
-Rhinoceros
-Rhinoceros
-Succulent
-Cockatrice
-Devourer
-Iksar Skeleton
-Dervish
-Saber-toothed Cat
-Anashti Sul
-Anashti Sul
-Cat
-Wolf
-Quellious
-Void Hulk
-Valkyrie
-Monkey
-Zombie
-Giant Zombie
-Stitched Zombie
-Royal Mummy
-Pridewing Mount
-Direhound Mount
-Gnoll Pup
-Dragon
-Trakanon
-20th Anniversary Cake
-Sarnak Skeleton
-Yeti
-Drolvarg
-Atrebe
-Cat
-Sarnak
-Dragon
-Venril Sathir
-Fae Drake
-Horse
-Dragon
-Dragon
-Chokidai Mount
-Cockatrice Mount
-Earth Elemental
-Air Elemental
-Water Elemental
-Fire Elemental
-Bear
-Djinn
-Snail Mount
-Djinn
-Elemental
-Snail
-Nilborien
-Rallos Zek
-Vampire
-Giant
-Hag
-Walrus
-Ulthork
-Rabbit
-Zombie
-Griffin
-Griffin Mount
-Tserrina Syl`Tor
-Tserrina Syl`Tor
-Mermaid
-Dragon
-Zlandicar
-Leech
-Othmir
-Shark
-Jaled Dar
-Rabbit Mount
-Dragon
-Dragon
+
